@@ -81,7 +81,6 @@ jobs:
           packages: gcc-core gcc-g++ make libreadline7 libreadline-devel libncurses-devel libncursesw10
       - name: Compile project
         run: |
-          make -j $(getconf _NPROCESSORS_ONLN) clean
           make -j $(getconf _NPROCESSORS_ONLN) -C pspsh
           make -j $(getconf _NPROCESSORS_ONLN) -C usbhostfs_pc
           cp windows/driver_x64/libusb0.dll usbhostfs_pc/
