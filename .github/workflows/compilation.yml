@@ -68,3 +68,28 @@ jobs:
         tag_name: ${{ steps.tag.outputs.VERSION }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Cygwin
+        uses: egor-tensin/setup-cygwin@v3
+        with:
+          platform: x64
+          packages: gcc-core gcc-g++ make libreadline7 libreadline-devel libncurses-devel libncursesw10
+      - name: Compile project
+        run: |
+          make -j $(getconf _NPROCESSORS_ONLN) clean
+          make -j $(getconf _NPROCESSORS_ONLN) -C pspsh
+          make -j $(getconf _NPROCESSORS_ONLN) -C usbhostfs_pc
+          cp windows/driver_x64/libusb0.dll usbhostfs_pc/
+      - name: Upload artifacts
+        if: ${{ success() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: psplinkusb-windows
+          path: |
+            pspsh
+            usbhostfs_pc
