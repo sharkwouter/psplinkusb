@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: pspsh-windows
-          path: windows
+          path: build
 
   publish:
     needs: [build, windows]
