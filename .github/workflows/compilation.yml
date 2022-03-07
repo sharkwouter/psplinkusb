@@ -29,7 +29,7 @@ jobs:
       if: ${{ success() }}
       uses: actions/upload-artifact@v2
       with:
-        name: psplink
+        name: psplinkusb
         path: release
 
   windows:
@@ -61,7 +61,7 @@ jobs:
         if: ${{ success() }}
         uses: actions/upload-artifact@v2
         with:
-          name: pspsh-windows
+          name: psplinkusb-windows
           path: build
 
   publish:
@@ -77,8 +77,8 @@ jobs:
 
     - name: Compress & Rename artifacts
       run: |
-        zip -r psplink.zip psplink
-        zip -r pspsh-windows.zip pspsh-windows
+        zip -r psplink.zip psplinkusb
+        zip -r pspsh-windows.zip psplinkusb-windows
 
     - name: Create pre-release
       if: github.ref == 'refs/heads/master'
