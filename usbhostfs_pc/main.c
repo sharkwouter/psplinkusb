@@ -217,7 +217,7 @@ int euid_usb_bulk_write(libusb_device_handle *dev, int ep, char *bytes, int size
 
 	seteuid(0);
 	setegid(0);
-	libusb_bulk_transfer(dev, ep, bytes, size, &ret, timeout);
+	ret = libusb_bulk_transfer(dev, ep, bytes, size, NULL, timeout);
 	seteuid(getuid());
 	setegid(getgid());
 
@@ -235,7 +235,7 @@ int euid_usb_bulk_read(libusb_device_handle *dev, int ep, char *bytes, int size,
 			dev, ep, bytes, size, timeout);
 	seteuid(0);
 	setegid(0);
-	libusb_bulk_transfer(dev, ep, bytes, size, &ret, timeout);
+	ret = libusb_bulk_transfer(dev, ep, bytes, size, NULL, timeout);
 	seteuid(getuid());
 	setegid(getgid());
 
